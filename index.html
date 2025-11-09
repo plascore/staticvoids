@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            background-color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 790px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        h1 {
+            color: rgb(255, 200, 5);
+            transition: all 0.5s ease;
+          
+        
+        }
+
+        h1:hover {
+            text-shadow:  0 0 10px #fdffc4;
+            transform: scale(1.1);
+            animation: wob 0.25s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+            cursor:default;
+
+        }
+
+        @keyframes wob {
+                0% {
+            transform: rotate(0deg);
+            transform:translateX(1px);
+        }
+        25% {
+            transform: rotate(0.5deg);  /* Slight tilt clockwise */
+            transform:translate-Y(21px);
+        }
+        50% {
+            transform: rotate(0deg);  /* Back to original */
+            transform:translateX(-1px);
+        }
+        75% {
+            transform: rotate(-0.5deg); /* Slight tilt counterclockwise */
+            transform:translateY(1px);
+
+        }
+        100% {
+            transform: rotate(0deg);  /* Back to original */
+    }
+        }
+
+
+    
+
+
+    </style>
+
+</head>
+<body>
+   <div class="container">
+        <h1>What</h1>
+        <h1>does</h1>
+        <h1>it</h1>
+        <h1>mean</h1>
+        <h1>to</h1>
+        <h1>program.</h1>
+
+    </div>
+    
+</body>
+</html>
