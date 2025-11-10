@@ -45,14 +45,14 @@
 
   <script>
   async function loadNotes() {
-    const res = await fetch("/functions/notesapi", { method: "GET" });
+    const res = await fetch("/notesapi", { method: "GET" });
     const data = await res.json();
     document.getElementById("noteBox").value = data.notes || "";
   }
 
   async function saveNotes() {
     const content = document.getElementById("noteBox").value;
-    await fetch("/functions/notesapi", {
+    await fetch("/notesapi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ notes: content })
@@ -60,7 +60,7 @@
   }
 
   async function clearNotes() {
-    await fetch("/functions/notesapi", { method: "DELETE" });
+    await fetch("/notesapi", { method: "DELETE" });
     document.getElementById("noteBox").value = "";
   }
 
