@@ -18,7 +18,7 @@
     <div class="menu">
       <a href="flow.html">Flow</a>
       <a href="canvas.html">Canvas</a>
-      <a href="/notes.html">Notes</a>
+      <a href="notes.html">Notes</a>
       <a href="gallery.html">Gallery</a>
     </div>
     <div class="right"></div>
@@ -45,14 +45,14 @@
 
   <script>
   async function loadNotes() {
-    const res = await fetch("/functions/notes", { method: "GET" });
+    const res = await fetch("/functions/notesapi", { method: "GET" });
     const data = await res.json();
     document.getElementById("noteBox").value = data.notes || "";
   }
 
   async function saveNotes() {
     const content = document.getElementById("noteBox").value;
-    await fetch("/functions/notes", {
+    await fetch("/functions/notesapi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ notes: content })
@@ -60,7 +60,7 @@
   }
 
   async function clearNotes() {
-    await fetch("/functions/notes", { method: "DELETE" });
+    await fetch("/functions/notesapi", { method: "DELETE" });
     document.getElementById("noteBox").value = "";
   }
 
