@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static Voids</title>
 
-<title>Static Voids</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/spawn" href="/assets/spawn.png">
-<link rel="stylesheet" href="assets/styles.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/assets/spawn.png">
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
 
@@ -29,13 +27,46 @@
   <!-- Centered content -->
   <div class="center-content">
     <div class="home-logo">
-        <h1>notes</h1>
+      <h1>notes</h1>
+    </div>
+
+    <!-- Notes UI -->
+    <div class="notes-container">
+      <textarea id="noteBox" placeholder="Write something meaningful..."></textarea>
+      <div class="buttons">
+        <button id="saveBtn">Save</button>
+        <button id="clearBtn">Clear</button>
+      </div>
     </div>
   </div>
-
 
   <!-- Grain overlay -->
   <div class="grain" aria-hidden="true"></div>
 
+  <script>
+  async function loadNotes() {
+    const res = await fetch("/functions/notes", { method: "GET" });
+    const data = await res.json();
+    document.getElementById("noteBox").value = data.notes || "";
+  }
+
+  async function saveNotes() {
+    const content = document.getElementById("noteBox").value;
+    await fetch("/functions/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ notes: content })
+    });
+  }
+
+  async function clearNotes() {
+    await fetch("/functions/notes", { method: "DELETE" });
+    document.getElementById("noteBox").value = "";
+  }
+
+  document.getElementById("saveBtn").addEventListener("click", saveNotes);
+  document.getElementById("clearBtn").addEventListener("click", clearNotes);
+  loadNotes();
+  </script>
 </body>
 </html>
