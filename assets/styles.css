@@ -1,0 +1,139 @@
+ * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; font-family: 'Inter', sans-serif; background-color:#000; color:#fff; }
+
+  a { text-decoration:none; color:#fff; }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Top nav */
+  nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 1rem 3rem;
+    position: fixed;
+    top:0;
+    width:100%;
+    background-color:#000;
+    border-bottom:1px solid #222;
+    z-index:10;
+  }
+
+  .logo a {
+    font-weight:700;
+    font-size:1.1rem;
+    letter-spacing:0.5px;
+    transition:text-shadow 0.3s ease, color 0.3s ease;
+  }
+  .logo a:hover {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    font-weight: 800;
+  }
+
+  /* Centered menu, unaffected by logo */
+  .menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
+  }
+
+  .menu a {
+    display: inline-block;      /* only as wide as text */
+    position: relative;
+    font-weight: 700;
+    font-size:1.1rem;
+    padding: 0.5rem 0;
+  }
+
+  .menu a::after {
+    content:'';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #fff;
+    transform: scaleX(0);
+    transform-origin: center;  /* expand from center */
+    transition: transform 0.3s ease;
+  }
+
+  .menu a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .right { }
+
+  /* Centered homepage content */
+  .center-content {
+    flex: 1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    margin-top:6rem;
+  }
+
+  /* Animated Static Voids text */
+  .home-logo {
+    font-size:4rem;
+    font-weight:700;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:0.2rem;
+    margin-bottom:2rem;
+    user-select: none;        /* prevents text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+  }
+
+  .home-logo span {
+    opacity:0;
+    display:inline-block;
+    animation: fadeUp 0.9s cubic-bezier(.2,.9,.2,1) forwards, idle-bob 6s ease-in-out infinite alternate, idle-glow 4.5s ease-in-out infinite;
+    text-rendering: optimizeLegibility;
+    will-change: transform, text-shadow;
+    transform: translateY(20px);
+  }
+
+  .home-logo span:nth-child(n) { animation-delay: calc(0.1s * var(--i)); }
+
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+  @keyframes idle-bob { 0%{transform:translateY(0);}50%{transform:translateY(-12px);}100%{transform:translateY(0);} }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-logo span { animation: fadeUp .9s forwards; transform: none; }
+  }
+
+  /* Dev signature at bottom */
+  .dev { text-align:center; font-size:0.8rem; color:#555; letter-spacing:1px; padding:1rem 0; }
+
+  /* Grain overlay using GIF */
+  .grain {
+    position: fixed;
+    inset:0;
+    pointer-events:none;
+    mix-blend-mode: overlay;
+    opacity:.6;
+    z-index:9999;
+    background: url('assets/grain.gif') repeat;
+    background-size: cover;
+  }
+
+  /* Responsive */
+  @media(max-width:768px){
+    nav{padding:1rem 2rem;}
+    .menu{gap:1rem;}
+    .home-logo{font-size:2.5rem; margin-bottom:1.5rem;}
+  }
