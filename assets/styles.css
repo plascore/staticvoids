@@ -127,7 +127,7 @@
     mix-blend-mode: overlay;
     opacity:.6;
     z-index:9999;
-    background: url('assets/grain.gif') repeat;
+    background: url('grain.gif') repeat;
     background-size: cover;
   }
 
