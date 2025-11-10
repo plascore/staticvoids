@@ -1,92 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>static void</title>
-    <link rel="icon" type="image/png" href="assets/spawn.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Voids</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Reset */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; font-family: 'Inter', sans-serif; background-color:#000; color:#fff; }
 
-    <style>
-        body {
-            background-color: black;
-            font-family: Arial, Helvetica, sans-serif;
-            text-align: center;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
-            min-height: 100vh; 
-        }
+  a { text-decoration:none; color:#fff; }
 
-        header {
-            background: linear-gradient(90deg, #ff8401, #cb5b00, #ff7310);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-            margin-top: 7vw;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-weight:bold;
-            font-size:15vw;
-        }
+  /* Top nav */
+  nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 1rem 3rem;
+    position: fixed;
+    top:0;
+    width:100%;
+    background-color:#000;
+    border-bottom:1px solid #222;
+    z-index:10;
+  }
 
-        .container {
-            margin-bottom: 5vw;
-            display: flex;
-            justify-content:center;
-            gap: 1vw;
-        }
+  .logo a {
+    font-weight:700;
+    font-size:1.1rem;
+    letter-spacing:0.5px;
+    transition:text-shadow 0.3s ease, color 0.3s ease;
+  }
+  .logo a:hover {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    font-weight: 800;
+  }
 
-        h1 {
-            color: rgb(255, 255, 255);
-            transition: all 0.5s ease;
-            font-size: 4vw;
-        }
+  /* Centered menu, unaffected by logo */
+  .menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
+  }
 
-        h1:hover {
-            text-shadow:  0 0 10px #fdffc4;
-            transform: scale(1.1);
-            animation: wob 0.25s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
-            cursor:default;
+  .menu a {
+    display: inline-block;      /* only as wide as text */
+    position: relative;
+    font-weight: 700;
+    font-size:1.1rem;
+    padding: 0.5rem 0;
+  }
 
-        }
+  .menu a::after {
+    content:'';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #fff;
+    transform: scaleX(0);
+    transform-origin: center;  /* expand from center */
+    transition: transform 0.3s ease;
+  }
 
-        @keyframes wob {
-                0% {
-            transform: rotate(0deg);
-            transform:translateX(1px);
-        }
-        25% {
-            transform: rotate(0.5deg);  /* Slight tilt clockwise */
-            transform:translate-Y(21px);
-        }
-        50% {
-            transform: rotate(0deg);  /* Back to original */
-            transform:translateX(-1px);
-        }
-        75% {
-            transform: rotate(-0.5deg); /* Slight tilt counterclockwise */
-            transform:translateY(1px);
+  .menu a:hover::after {
+    transform: scaleX(1);
+  }
 
-        }
-        100% {
-            transform: rotate(0deg);  /* Back to original */
-    }
-        }
+  .right { }
 
-    </style>
+  /* Centered homepage content */
+  .center-content {
+    flex: 1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    margin-top:6rem;
+  }
 
+  /* Animated Static Voids text */
+  .home-logo {
+    font-size:4rem;
+    font-weight:700;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:0.2rem;
+    margin-bottom:2rem;
+    user-select: none;        /* prevents text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+  }
+
+  .home-logo span {
+    opacity:0;
+    display:inline-block;
+    animation: fadeUp 0.9s cubic-bezier(.2,.9,.2,1) forwards, idle-bob 6s ease-in-out infinite alternate, idle-glow 4.5s ease-in-out infinite;
+    text-rendering: optimizeLegibility;
+    will-change: transform, text-shadow;
+    transform: translateY(20px);
+  }
+
+  .home-logo span:nth-child(n) { animation-delay: calc(0.1s * var(--i)); }
+
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+  @keyframes idle-bob { 0%{transform:translateY(0);}50%{transform:translateY(-12px);}100%{transform:translateY(0);} }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-logo span { animation: fadeUp .9s forwards; transform: none; }
+  }
+
+  /* Dev signature at bottom */
+  .dev { text-align:center; font-size:0.8rem; color:#555; letter-spacing:1px; padding:1rem 0; }
+
+  /* Grain overlay using GIF */
+  .grain {
+    position: fixed;
+    inset:0;
+    pointer-events:none;
+    mix-blend-mode: overlay;
+    opacity:.6;
+    z-index:9999;
+    background: url('assets/grain.gif') repeat;
+    background-size: cover;
+  }
+
+  /* Responsive */
+  @media(max-width:768px){
+    nav{padding:1rem 2rem;}
+    .menu{gap:1rem;}
+    .home-logo{font-size:2.5rem; margin-bottom:1.5rem;}
+  }
+</style>
 </head>
 <body>
-    <header>Derese!</header>
-   <div class="container">
-        <h1>What</h1>
-        <h1>does</h1>
-        <h1>it</h1>
-        <h1>mean</h1>
-        <h1>to</h1>
-        <h1>program.</h1>
 
+  <!-- Top nav -->
+  <nav>
+    <div class="logo"><a href="https://staticvoids.xyz/">Static Voids</a></div>
+    <div class="menu">
+      <a href="#">Flow</a>
+      <a href="#">Canvas</a>
+      <a href="#">Notes</a>
     </div>
-    
+    <div class="right"></div>
+  </nav>
+
+  <!-- Centered content -->
+  <div class="center-content">
+    <div class="home-logo">
+      <span style="--i:1;">s</span>
+      <span style="--i:2;">t</span>
+      <span style="--i:3;">a</span>
+      <span style="--i:4;">t</span>
+      <span style="--i:5;">i</span>
+      <span style="--i:6;">c</span>
+      <span style="--i:7;"> </span>
+      <span style="--i:8;">v</span>
+      <span style="--i:9;">o</span>
+      <span style="--i:10;">i</span>
+      <span style="--i:11;">d</span>
+      <span style="--i:12;">s</span>
+    </div>
+  </div>
+
+  <!-- Dev signature -->
+  <div class="dev">dev by plascore</div>
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
 </body>
 </html>
